@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arcade Shooter 2048</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <div class="header">
+        <div class="title-wrap">
+          <small>STAGE 2048</small>
+          <h1>MISSION</h1>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <small>SCORE</small>
+            <b id="score">0</b>
+          </div>
+          <div class="stat">
+            <small>BEST</small>
+            <b id="best">0</b>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <span>← ↑ → ↓ NAVIGATE</span>
+        <button id="restart">RESTART</button>
+      </div>
+
+      <div class="board-frame">
+        <div id="board"></div>
+      </div>
+
+      <div class="msg" id="msg"></div>
+      <div class="legend">
+        GREY BLUE · INDIGO · PURPLE · MAGENTA · ROSE · COPPER · ORANGE · AMBER ·
+        GOLD
+      </div>
+    </div>
+
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>
