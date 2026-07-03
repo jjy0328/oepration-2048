@@ -1,1 +1,3 @@
 .omx/
+.env
+.env.local

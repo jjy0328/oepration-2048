@@ -23,6 +23,28 @@
           <small>ARCADE SHOOTER</small>
           <h1>MISSION 2048</h1>
         </div>
+        <form class="nickname-panel" id="nickname-form">
+          <label for="nickname-input">NICKNAME</label>
+          <div class="nickname-row">
+            <input
+              id="nickname-input"
+              name="nickname"
+              type="text"
+              maxlength="16"
+              autocomplete="nickname"
+              placeholder="PILOT NAME"
+            />
+            <button type="submit">SET</button>
+          </div>
+          <span id="nickname-status"></span>
+        </form>
+        <section class="leaderboard-panel" aria-label="leaderboard">
+          <div class="leaderboard-head">
+            <b>TOP 10</b>
+            <span id="leaderboard-status"></span>
+          </div>
+          <ol id="leaderboard-list"></ol>
+        </section>
         <div class="mode-menu" aria-label="game modes">
           <button id="tutorial-mode">튜토리얼</button>
           <button class="primary-mode" id="solo-mode">싱글 플레이</button>
@@ -114,7 +136,7 @@
         </div>
 
         <div class="controls">
-          <span>← ↑ → ↓ NAVIGATE</span>
+          <span><b id="current-player">NO PILOT</b> / SWIPE / ← ↑ → ↓</span>
           <div class="control-buttons">
             <button id="home">HOME</button>
             <button id="pause">PAUSE</button>
@@ -141,6 +163,11 @@
               <span></span>
             </div>
           </section>
+
+          <aside class="battle-rank-panel" aria-label="top ranking">
+            <div class="battle-rank-head">TOP 10</div>
+            <ol id="battle-leaderboard-list"></ol>
+          </aside>
           <div class="pause-hud" id="pause-hud">PAUSED</div>
         </div>
 

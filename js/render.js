@@ -6,6 +6,7 @@ const bestElement = document.getElementById("best");
 const messageElement = document.getElementById("msg");
 const powerElement = document.getElementById("power");
 const missionOverlayElement = document.getElementById("mission-overlay");
+const missionOverlayTitleElement = missionOverlayElement.querySelector("strong");
 
 // 보드 데이터를 화면으로 변환
 export function drawBoard(board) {
@@ -46,7 +47,8 @@ export function setMessage(text) {
   messageElement.textContent = text;
 }
 
-export function showMissionFail() {
+export function showMissionFail(title = "MISSION FAILED") {
+  missionOverlayTitleElement.textContent = title;
   missionOverlayElement.classList.add("is-visible");
   missionOverlayElement.setAttribute("aria-hidden", "false");
 }

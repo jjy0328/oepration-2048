@@ -17,6 +17,7 @@ export class Game2048 {
     this.best = getBestScore();
     this.onScoreChange = options.onScoreChange || (() => {});
     this.onMissionFail = options.onMissionFail || (() => {});
+    this.onMissionClear = options.onMissionClear || (() => {});
   }
 
   init() {
@@ -88,6 +89,7 @@ export class Game2048 {
   checkGameState() {
     if (this.board.flat().includes(2048)) {
       setMessage("MISSION CLEAR: 2048");
+      this.onMissionClear();
       return;
     }
 
@@ -102,5 +104,9 @@ export class Game2048 {
     drawBoard(this.board);
     updateScore(this.score);
     updateBestScore(this.best);
+  }
+
+  getScore() {
+    return this.score;
   }
 }
