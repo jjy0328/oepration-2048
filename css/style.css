@@ -1338,14 +1338,15 @@ button:active {
   body {
     min-height: 100svh;
     padding: 6px;
-    align-items: center;
-    overflow: hidden;
+    align-items: flex-start;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .app,
   .app:has(.game-screen.is-active) {
     width: calc(100vw - 12px);
-    max-height: calc(100svh - 12px);
     padding: 8px;
     border-width: 5px;
   }
@@ -1437,12 +1438,13 @@ button:active {
 
   .mission-layout {
     grid-template-columns:
-      minmax(0, calc(100svh - 118px))
-      minmax(150px, 0.78fr)
-      minmax(130px, 0.56fr);
+      minmax(0, 4fr)
+      minmax(0, 4fr)
+      minmax(112px, 2fr);
     gap: 7px;
     min-height: 0;
     height: clamp(270px, calc(100svh - 118px), 430px);
+    touch-action: pan-y;
   }
 
   .board-frame,

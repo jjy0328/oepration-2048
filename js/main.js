@@ -254,6 +254,7 @@ document.addEventListener(
   "touchstart",
   (event) => {
     if (currentScreen !== "game" || !event.touches.length) return;
+    if (!event.target.closest("#board, #battle")) return;
 
     touchTracking = true;
     touchStartX = event.touches[0].clientX;
