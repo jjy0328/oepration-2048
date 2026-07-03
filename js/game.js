@@ -1,0 +1,89 @@
+import { moveBoard, canMove } from "./move.js";
+import { getBestScore, saveBestScore } from "./storage.js";
+import {
+  drawBoard,
+  updateScore,
+  updateBestScore,
+  setMessage,
+  showPlus,
+} from "./render.js";
+
+export class Game2048 {
+  constructor() {
+    this.board = [];
+    this.score = 0;
+    this.best = getBestScore();
+  }
+
+  init() {
+    this.board = this.createEmptyBoard();
+    this.score = 0;
+
+    this.addRandomTile();
+    this.addRandomTile();
+
+    setMessage("");
+    this.render();
+  }
+
+  createEmptyBoard() {
+    return Array.from({ length: 4 }, () => Array(4).fill(0));
+  }
+
+  addRandomTile() {
+    const emptyCells = [];
+
+    for (let r = 0; r < 4; r++) {
+      for (let c = 0; c < 4; c++) {
+        if (!this.board[r][c]) {
+          emptyCells.push([r, c]);
+        }
+      }
+    }
+
+    if (!emptyCells.length) return;
+
+    const [row, col] =
+      emptyCells[Math.floor(Math.random() * emptyCells.length)];
+    this.board[row][col] = Math.random() < 0.9 ? 2 : 4;
+  }
+
+  move(direction) {
+    const result = moveBoard(this.board, direction);
+
+    if (!result.moved) return;
+
+    this.board = result.board;
+    this.score += result.gained;
+
+    if (result.gained) {
+      showPlus(result.gained);
+    }
+
+    if (this.score > this.best) {
+      this.best = this.score;
+      saveBestScore(this.best);
+    }
+
+    this.addRandomTile();
+    this.render();
+    this.checkGameState();
+  }
+
+  checkGameState() {
+    if (this.board.flat().includes(2048)) {
+      setMessage("MISSION CLEAR: 2048");
+      return;
+    }
+
+    if (!canMove(this.board)) {
+      setMessage("MISSION FAILED");
+    }
+  }
+
+  render() {
+    drawBoard(this.board);
+    updateScore(this.score);
+    updateBestScore(this.best);
+  }
+}

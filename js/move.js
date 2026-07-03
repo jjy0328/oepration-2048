@@ -1,3 +1,4 @@
+// 한 줄을 왼쪽으로 밀고 합치는 함수
 export function slide(row) {
   const filteredRow = row.filter(Boolean);
   let gained = 0;
@@ -20,10 +21,12 @@ export function slide(row) {
   };
 }
 
+// 상하좌우 움직이는 함수
 export function moveBoard(board, direction) {
   const nextBoard = board.map((row) => [...row]);
   let gained = 0;
 
+  // 왼쪽 이동
   if (direction === "L") {
     for (let r = 0; r < 4; r++) {
       const result = slide(nextBoard[r]);
@@ -32,16 +35,20 @@ export function moveBoard(board, direction) {
     }
   }
 
+  // 오른쪽 이동
   if (direction === "R") {
     for (let r = 0; r < 4; r++) {
+      // 오른쪽으로 이동할 때는 배열을 뒤집어서 왼쪽으로 이동한 후 다시 뒤집는다.
       const result = slide([...nextBoard[r]].reverse());
       nextBoard[r] = result.row.reverse();
       gained += result.gained;
     }
   }
 
+  // 위쪽 이동
   if (direction === "U") {
     for (let c = 0; c < 4; c++) {
+      // 각 열을 추출하여 slide 함수를 적용
       const column = [
         nextBoard[0][c],
         nextBoard[1][c],
@@ -59,6 +66,7 @@ export function moveBoard(board, direction) {
     }
   }
 
+  // 아래쪽 이동
   if (direction === "D") {
     for (let c = 0; c < 4; c++) {
       const column = [
@@ -68,7 +76,8 @@ export function moveBoard(board, direction) {
         nextBoard[3][c],
       ];
 
-      const result = slide(column);
+      // 아래쪽으로 이동할 때는 배열을 뒤집어서 위쪽으로 이동한 후 다시 뒤집는다.
+      const result = slide([...column].reverse());
       const reversed = result.row.reverse();
 
       for (let r = 0; r < 4; r++) {
@@ -88,11 +97,15 @@ export function moveBoard(board, direction) {
   };
 }
 
+// 더 움직일 수 있는지 검사
 export function canMove(board) {
   for (let r = 0; r < 4; r++) {
     for (let c = 0; c < 4; c++) {
+      // 빈 칸이 있으면 이동 가능
       if (!board[r][c]) return true;
+      // 오른쪽 숫자와 같으면 합칠 수 있으므로 이동 가능.
       if (c < 3 && board[r][c] === board[r][c + 1]) return true;
+      // 아래쪽 숫자와 같으면 합칠 수 있으므로 이동 가능.
       if (r < 3 && board[r][c] === board[r + 1][c]) return true;
     }
   }
