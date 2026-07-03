@@ -18,55 +18,135 @@
     </div>
 
     <div class="app">
-      <div class="header">
+      <section class="screen home-screen is-active" id="home-screen">
         <div class="title-wrap">
+          <small>ARCADE SHOOTER</small>
           <h1>MISSION 2048</h1>
         </div>
-
-        <div class="stats">
-          <div class="stat">
-            <small>SCORE</small>
-            <b id="score">0</b>
-          </div>
-          <div class="stat">
-            <small>BEST</small>
-            <b id="best">0</b>
-          </div>
+        <div class="mode-menu" aria-label="game modes">
+          <button id="tutorial-mode">튜토리얼</button>
+          <button class="primary-mode" id="solo-mode">싱글 플레이</button>
+          <button id="dual-mode">2P 배틀</button>
         </div>
-      </div>
+        <div class="legend">MADE BY JUYOUNG JEONG</div>
+      </section>
 
-      <div class="controls">
-        <span>← ↑ → ↓ NAVIGATE</span>
-        <div class="control-buttons">
-          <button id="pause">PAUSE</button>
-          <button id="restart">RESTART</button>
-        </div>
-      </div>
-
-      <div class="mission-layout">
-        <div class="board-frame">
-          <div id="board"></div>
+      <section class="screen panel-screen" id="tutorial-screen" aria-hidden="true">
+        <div class="panel-header">
+          <div class="title-wrap">
+            <small>MISSION GUIDE</small>
+            <h1>TUTORIAL</h1>
+          </div>
+          <button class="back-home" data-target="home">홈으로</button>
         </div>
 
-        <section class="battle-frame" aria-label="space battle">
-          <div class="battle-hud">
-            <span>FIRE POWER</span>
-            <b id="power">LV 1</b>
-          </div>
-          <div class="assist-hud">AUTO EVADE</div>
-          <canvas id="battle" width="360" height="430"></canvas>
-          <div class="player-hp">
-            <span></span>
-          </div>
-          <div class="enemy-hp">
-            <span></span>
-          </div>
-        </section>
-        <div class="pause-hud" id="pause-hud">PAUSED</div>
-      </div>
+        <div class="tutorial-brief">
+          <strong>2048을 만들면 미션 클리어</strong>
+          <span>숫자 퍼즐을 움직이면 오른쪽 전투도 함께 진행됩니다.</span>
+        </div>
 
-      <div class="msg" id="msg"></div>
-      <div class="legend">MADE BY JUYOUNG JEONG</div>
+        <div class="tutorial-layout">
+          <div class="tutorial-card tutorial-card-main">
+            <small>조작</small>
+            <div class="key-cluster" aria-hidden="true">
+              <span></span>
+              <b>↑</b>
+              <b>←</b>
+              <b>↓</b>
+              <b>→</b>
+            </div>
+            <p>방향키로 타일과 우주선을 동시에 움직입니다.</p>
+          </div>
+
+          <div class="tutorial-stack">
+            <div class="tutorial-step">
+              <b>1</b>
+              <span>같은 숫자 타일을 합치기</span>
+            </div>
+            <div class="tutorial-step">
+              <b>2</b>
+              <span>점수가 오르면 화력 강화</span>
+            </div>
+            <div class="tutorial-step">
+              <b>3</b>
+              <span>2048 달성 또는 생존 실패로 종료</span>
+            </div>
+          </div>
+
+          <div class="tutorial-tip">
+            <b>TIP</b>
+            <span>스페이스바 또는 PAUSE 버튼으로 언제든 잠시 멈출 수 있어요.</span>
+          </div>
+        </div>
+        <button class="primary-mode wide-action" id="tutorial-start">혼자하기 시작</button>
+      </section>
+
+      <section class="screen panel-screen coming-screen" id="coming-screen" aria-hidden="true">
+        <div class="panel-header">
+          <div class="title-wrap">
+            <small>DUAL MODE</small>
+            <h1>READY SOON</h1>
+          </div>
+          <button class="back-home" data-target="home">홈으로</button>
+        </div>
+        <div class="coming-panel">
+          <strong>준비중입니다</strong>
+          <span>2인 대결 모드는 다음 업데이트에서 열립니다.</span>
+        </div>
+      </section>
+
+      <section class="screen game-screen" id="game-screen" aria-hidden="true">
+        <div class="header">
+          <div class="title-wrap">
+            <h1>MISSION 2048</h1>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <small>SCORE</small>
+              <b id="score">0</b>
+            </div>
+            <div class="stat">
+              <small>BEST</small>
+              <b id="best">0</b>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <span>← ↑ → ↓ NAVIGATE</span>
+          <div class="control-buttons">
+            <button id="home">HOME</button>
+            <button id="pause">PAUSE</button>
+            <button id="restart">RESTART</button>
+          </div>
+        </div>
+
+        <div class="mission-layout">
+          <div class="board-frame">
+            <div id="board"></div>
+          </div>
+
+          <section class="battle-frame" aria-label="space battle">
+            <div class="battle-hud">
+              <span>FIRE POWER</span>
+              <b id="power">LV 1</b>
+            </div>
+            <div class="assist-hud">AUTO EVADE</div>
+            <canvas id="battle" width="360" height="430"></canvas>
+            <div class="player-hp">
+              <span></span>
+            </div>
+            <div class="enemy-hp">
+              <span></span>
+            </div>
+          </section>
+          <div class="pause-hud" id="pause-hud">PAUSED</div>
+        </div>
+
+        <div class="msg" id="msg"></div>
+        <div class="legend">MADE BY JUYOUNG JEONG</div>
+      </section>
     </div>
 
     <script type="module" src="./js/main.js"></script>

@@ -36,7 +36,13 @@ body {
     ),
     linear-gradient(180deg, var(--space), var(--space2));
   color: var(--text);
-  font-family: "Courier New", monospace;
+  font-family:
+    "Apple SD Gothic Neo",
+    "Malgun Gothic",
+    "Noto Sans KR",
+    "Pretendard",
+    system-ui,
+    sans-serif;
   image-rendering: pixelated;
   overflow-x: hidden;
 }
@@ -146,6 +152,285 @@ body::after {
   inset: 10px;
   border: 2px solid rgba(105, 210, 255, 0.2);
   pointer-events: none;
+}
+
+.screen {
+  display: none;
+  position: relative;
+  z-index: 1;
+}
+
+.screen.is-active {
+  display: block;
+}
+
+.home-screen {
+  min-height: min(560px, calc(100vh - 100px));
+  padding: 72px 18px 28px;
+  text-align: center;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(105, 210, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(105, 210, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(5, 9, 19, 0.1), rgba(5, 9, 19, 0.52));
+  background-size: 34px 34px, 34px 34px, auto;
+}
+
+.mode-menu {
+  display: grid;
+  gap: 12px;
+  width: min(420px, 100%);
+  margin: 22px auto 0;
+  padding: 14px;
+  background: rgba(5, 9, 19, 0.76);
+  border: 6px solid var(--line);
+  box-shadow:
+    7px 7px 0 var(--shadow),
+    inset 0 0 0 2px rgba(242, 212, 107, 0.16);
+}
+
+.mode-menu button,
+.wide-action {
+  width: 100%;
+  min-height: 58px;
+  font-size: 18px;
+}
+
+.mode-menu button {
+  position: relative;
+  text-align: left;
+  padding-left: 46px;
+}
+
+.mode-menu button::before {
+  content: "▶";
+  position: absolute;
+  left: 16px;
+  color: var(--cyan);
+  text-shadow: 2px 2px 0 var(--line);
+}
+
+.primary-mode {
+  color: #10182f;
+  background: var(--gold);
+  box-shadow:
+    4px 4px 0 var(--shadow),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.32);
+}
+
+.primary-mode:hover {
+  background: #ffe68b;
+}
+
+.panel-screen {
+  min-height: min(650px, calc(100vh - 100px));
+  padding: 8px 0 0;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.tutorial-brief {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 18px;
+  background: linear-gradient(90deg, rgba(242, 212, 107, 0.22), rgba(105, 210, 255, 0.12));
+  border: 6px solid var(--line);
+  box-shadow:
+    6px 6px 0 var(--shadow),
+    inset 0 0 0 2px rgba(242, 212, 107, 0.2);
+}
+
+.tutorial-brief strong {
+  color: var(--gold);
+  font-size: clamp(24px, 4vw, 38px);
+  font-weight: 900;
+  line-height: 1.15;
+  text-shadow: 3px 3px 0 var(--line);
+}
+
+.tutorial-brief span {
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.tutorial-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.9fr) minmax(280px, 1.1fr);
+  gap: 14px;
+  align-items: stretch;
+}
+
+.tutorial-card,
+.tutorial-step,
+.tutorial-tip,
+.coming-panel {
+  background: #10182f;
+  border: 6px solid var(--line);
+  box-shadow:
+    6px 6px 0 var(--shadow),
+    inset 0 0 0 2px rgba(105, 210, 255, 0.18);
+}
+
+.tutorial-card {
+  min-height: 100%;
+  padding: 16px;
+}
+
+.tutorial-card small {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--cyan);
+  font-size: 13px;
+  font-weight: 900;
+  text-shadow: 2px 2px 0 var(--line);
+}
+
+.tutorial-card p {
+  margin: 14px 0 0;
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1.45;
+}
+
+.key-cluster {
+  display: grid;
+  grid-template-columns: repeat(3, 62px);
+  grid-template-rows: repeat(2, 54px);
+  justify-content: center;
+  gap: 8px;
+}
+
+.key-cluster span {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.key-cluster b {
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+  font-size: 24px;
+  background: #263258;
+  border: 5px solid var(--line);
+  box-shadow:
+    4px 4px 0 var(--shadow),
+    inset 0 0 0 2px rgba(105, 210, 255, 0.18);
+}
+
+.key-cluster b:nth-of-type(1) {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.key-cluster b:nth-of-type(2) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.key-cluster b:nth-of-type(3) {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.key-cluster b:nth-of-type(4) {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.tutorial-stack {
+  display: grid;
+  gap: 10px;
+}
+
+.tutorial-step {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  align-items: center;
+  min-height: 74px;
+  padding: 12px 14px;
+}
+
+.tutorial-step b {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  color: #10182f;
+  background: var(--gold);
+  border: 4px solid var(--line);
+  box-shadow: 3px 3px 0 var(--shadow);
+}
+
+.tutorial-step span,
+.tutorial-tip span {
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1.45;
+}
+
+.tutorial-tip {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 72px;
+  padding: 14px 16px;
+  background: #15112f;
+}
+
+.tutorial-tip b {
+  flex: 0 0 auto;
+  color: #10182f;
+  background: var(--cyan);
+  padding: 7px 10px;
+  border: 4px solid var(--line);
+  box-shadow: 3px 3px 0 var(--shadow);
+}
+
+.wide-action {
+  display: block;
+  width: min(360px, 100%);
+  margin: 24px auto 0;
+}
+
+.coming-screen {
+  text-align: center;
+}
+
+.coming-panel {
+  display: grid;
+  place-items: center;
+  min-height: 330px;
+  padding: 26px;
+}
+
+.coming-panel strong {
+  display: block;
+  color: #ff6f9f;
+  font-size: clamp(38px, 8vw, 76px);
+  line-height: 1;
+  text-shadow:
+    5px 5px 0 var(--line),
+    0 0 18px rgba(255, 111, 159, 0.55);
+}
+
+.coming-panel span {
+  display: block;
+  margin-top: 14px;
+  color: var(--cyan);
+  font-size: 15px;
+  font-weight: 900;
 }
 
 .header {
@@ -518,6 +803,34 @@ button:active {
   }
 
   .header {
+    flex-direction: column;
+  }
+
+  .home-screen,
+  .panel-screen {
+    min-height: auto;
+    padding-top: 18px;
+  }
+
+  .panel-header {
+    flex-direction: column;
+  }
+
+  .back-home {
+    width: 100%;
+  }
+
+  .tutorial-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .key-cluster {
+    grid-template-columns: repeat(3, minmax(48px, 62px));
+    grid-template-rows: repeat(2, 50px);
+  }
+
+  .tutorial-tip {
+    align-items: flex-start;
     flex-direction: column;
   }
 

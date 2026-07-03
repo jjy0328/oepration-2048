@@ -1,8 +1,11 @@
 import { Game2048 } from "./game.js";
 import { ShooterBattle } from "./shooter.js";
-import { setMessage, showMissionFail } from "./render.js";
+import { hideMissionFail, setMessage, showMissionFail } from "./render.js";
 
 let gameEnded = false;
+let gameStarted = false;
+let shooterStarted = false;
+let currentScreen = "home";
 
 function endGame(message) {
   gameEnded = true;
@@ -24,6 +27,12 @@ const shooter = new ShooterBattle(
 );
 const pauseButton = document.getElementById("pause");
 const pauseHud = document.getElementById("pause-hud");
+const screens = {
+  home: document.getElementById("home-screen"),
+  tutorial: document.getElementById("tutorial-screen"),
+  coming: document.getElementById("coming-screen"),
+  game: document.getElementById("game-screen"),
+};
 let paused = false;
 
 const game = new Game2048({
@@ -40,10 +49,36 @@ const game = new Game2048({
   },
 });
 
-game.init();
-shooter.start();
+function showScreen(name) {
+  currentScreen = name;
+
+  Object.entries(screens).forEach(([screenName, element]) => {
+    const isActive = screenName === name;
+    element.classList.toggle("is-active", isActive);
+    element.setAttribute("aria-hidden", String(!isActive));
+  });
+}
+
+function startSoloGame() {
+  gameEnded = false;
+  gameStarted = true;
+  showScreen("game");
+  hideMissionFail();
+  setPaused(false);
+  game.init();
+
+  if (!shooterStarted) {
+    shooter.start();
+    shooterStarted = true;
+  }
+}
 
 function restartGame() {
+  if (!gameStarted) {
+    startSoloGame();
+    return;
+  }
+
   gameEnded = false;
   setPaused(false);
   game.init();
@@ -62,11 +97,34 @@ function togglePause() {
 }
 
 pauseButton.addEventListener("click", togglePause);
+document.getElementById("home").addEventListener("click", () => {
+  if (gameStarted && !gameEnded) {
+    setPaused(true);
+  }
+
+  hideMissionFail();
+  showScreen("home");
+});
 document.getElementById("restart").addEventListener("click", restartGame);
 document.getElementById("overlay-restart").addEventListener("click", restartGame);
+document.getElementById("solo-mode").addEventListener("click", startSoloGame);
+document.getElementById("tutorial-start").addEventListener("click", startSoloGame);
+document.getElementById("tutorial-mode").addEventListener("click", () => {
+  showScreen("tutorial");
+});
+document.getElementById("dual-mode").addEventListener("click", () => {
+  showScreen("coming");
+});
+document.querySelectorAll(".back-home").forEach((button) => {
+  button.addEventListener("click", () => {
+    showScreen("home");
+  });
+});
 
 // 키보드 이벤트 처리
 document.addEventListener("keydown", (event) => {
+  if (currentScreen !== "game") return;
+
   if (event.code === "Space") {
     event.preventDefault();
     if (gameEnded) return;
