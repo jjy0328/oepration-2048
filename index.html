@@ -7,11 +7,19 @@
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
+    <div class="mission-overlay" id="mission-overlay" aria-hidden="true">
+      <div class="mission-alert">
+        <small>MISSION STATUS</small>
+        <strong>MISSION FAILED</strong>
+        <span>PRESS RESTART</span>
+        <button id="overlay-restart">RESTART</button>
+      </div>
+    </div>
+
     <div class="app">
       <div class="header">
         <div class="title-wrap">
-          <small>STAGE 2048</small>
-          <h1>MISSION</h1>
+          <h1>MISSION 2048</h1>
         </div>
 
         <div class="stats">
@@ -28,18 +36,36 @@
 
       <div class="controls">
         <span>← ↑ → ↓ NAVIGATE</span>
-        <button id="restart">RESTART</button>
+        <div class="control-buttons">
+          <button id="pause">PAUSE</button>
+          <button id="restart">RESTART</button>
+        </div>
       </div>
 
-      <div class="board-frame">
-        <div id="board"></div>
+      <div class="mission-layout">
+        <div class="board-frame">
+          <div id="board"></div>
+        </div>
+
+        <section class="battle-frame" aria-label="space battle">
+          <div class="battle-hud">
+            <span>FIRE POWER</span>
+            <b id="power">LV 1</b>
+          </div>
+          <div class="assist-hud">AUTO EVADE</div>
+          <canvas id="battle" width="360" height="430"></canvas>
+          <div class="player-hp">
+            <span></span>
+          </div>
+          <div class="enemy-hp">
+            <span></span>
+          </div>
+        </section>
+        <div class="pause-hud" id="pause-hud">PAUSED</div>
       </div>
 
       <div class="msg" id="msg"></div>
-      <div class="legend">
-        GREY BLUE · INDIGO · PURPLE · MAGENTA · ROSE · COPPER · ORANGE · AMBER ·
-        GOLD
-      </div>
+      <div class="legend">MADE BY JUYOUNG JEONG</div>
     </div>
 
     <script type="module" src="./js/main.js"></script>

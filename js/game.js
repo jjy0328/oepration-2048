@@ -5,14 +5,18 @@ import {
   updateScore,
   updateBestScore,
   setMessage,
+  hideMissionFail,
+  showMissionFail,
   showPlus,
 } from "./render.js";
 
 export class Game2048 {
-  constructor() {
+  constructor(options = {}) {
     this.board = [];
     this.score = 0;
     this.best = getBestScore();
+    this.onScoreChange = options.onScoreChange || (() => {});
+    this.onMissionFail = options.onMissionFail || (() => {});
   }
 
   init() {
@@ -23,7 +27,9 @@ export class Game2048 {
     this.addRandomTile();
 
     setMessage("");
+    hideMissionFail();
     this.render();
+    this.onScoreChange({ score: this.score, best: this.best, gained: 0, reset: true });
   }
 
   createEmptyBoard() {
@@ -51,7 +57,10 @@ export class Game2048 {
   move(direction) {
     const result = moveBoard(this.board, direction);
 
-    if (!result.moved) return;
+    if (!result.moved) {
+      this.checkGameState();
+      return;
+    }
 
     this.board = result.board;
     this.score += result.gained;
@@ -67,6 +76,12 @@ export class Game2048 {
 
     this.addRandomTile();
     this.render();
+    this.onScoreChange({
+      score: this.score,
+      best: this.best,
+      gained: result.gained,
+      reset: false,
+    });
     this.checkGameState();
   }
 
@@ -78,6 +93,8 @@ export class Game2048 {
 
     if (!canMove(this.board)) {
       setMessage("MISSION FAILED");
+      showMissionFail();
+      this.onMissionFail();
     }
   }
 

@@ -4,6 +4,8 @@ const boardElement = document.getElementById("board");
 const scoreElement = document.getElementById("score");
 const bestElement = document.getElementById("best");
 const messageElement = document.getElementById("msg");
+const powerElement = document.getElementById("power");
+const missionOverlayElement = document.getElementById("mission-overlay");
 
 // 보드 데이터를 화면으로 변환
 export function drawBoard(board) {
@@ -36,8 +38,22 @@ export function updateBestScore(best) {
   bestElement.textContent = best;
 }
 
+export function updatePower(power) {
+  powerElement.textContent = `LV ${power}`;
+}
+
 export function setMessage(text) {
   messageElement.textContent = text;
+}
+
+export function showMissionFail() {
+  missionOverlayElement.classList.add("is-visible");
+  missionOverlayElement.setAttribute("aria-hidden", "false");
+}
+
+export function hideMissionFail() {
+  missionOverlayElement.classList.remove("is-visible");
+  missionOverlayElement.setAttribute("aria-hidden", "true");
 }
 
 export function showPlus(amount) {
