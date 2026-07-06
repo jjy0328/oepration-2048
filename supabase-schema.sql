@@ -7,11 +7,13 @@ create table if not exists public.scores (
 
 alter table public.scores enable row level security;
 
+drop policy if exists "Anyone can read top scores" on public.scores;
 create policy "Anyone can read top scores"
   on public.scores
   for select
   using (true);
 
+drop policy if exists "Anyone can submit scores" on public.scores;
 create policy "Anyone can submit scores"
   on public.scores
   for insert
