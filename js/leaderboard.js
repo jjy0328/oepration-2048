@@ -134,9 +134,16 @@ export async function submitScore(nickname, score) {
     return;
   }
 
-  const { error } = await supabase
+  const { error } = await supabase.rpc("submit_score", {
+    player_nickname: normalized,
+    player_score: numericScore,
+  });
+
+  if (!error) return;
+
+  const { error: insertError } = await supabase
     .from(activeConfig.scoreTable)
     .insert({ nickname: normalized, score: numericScore });
 
-  if (error) throw error;
+  if (insertError) throw insertError;
 }

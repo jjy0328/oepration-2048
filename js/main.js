@@ -14,7 +14,8 @@ let gameStarted = false;
 let shooterStarted = false;
 let currentScreen = "home";
 let playerNickname = getNickname();
-let scoreSubmitted = false;
+let lastSubmittedScore = 0;
+let pendingScoreSubmit = null;
 
 function endGame(message) {
   if (gameEnded) return;
@@ -68,6 +69,7 @@ const game = new Game2048({
     }
 
     shooter.setScore(score, gained);
+    scheduleScoreSubmit(score);
   },
 });
 
@@ -129,17 +131,38 @@ async function refreshLeaderboard() {
 }
 
 async function submitCurrentScore() {
-  if (scoreSubmitted || !playerNickname) return;
+  if (pendingScoreSubmit) {
+    clearTimeout(pendingScoreSubmit);
+    pendingScoreSubmit = null;
+  }
 
-  scoreSubmitted = true;
+  if (!playerNickname) return;
+
+  const score = game.getScore();
+
+  if (score <= 0 || score <= lastSubmittedScore) return;
 
   try {
-    await submitScore(playerNickname, game.getScore());
+    await submitScore(playerNickname, score);
+    lastSubmittedScore = score;
     await refreshLeaderboard();
   } catch (error) {
     leaderboardStatus.textContent = "SAVE FAILED";
     console.error(error);
   }
+}
+
+function scheduleScoreSubmit(score) {
+  if (!playerNickname || score <= 0 || score <= lastSubmittedScore) return;
+
+  if (pendingScoreSubmit) {
+    clearTimeout(pendingScoreSubmit);
+  }
+
+  pendingScoreSubmit = setTimeout(() => {
+    pendingScoreSubmit = null;
+    submitCurrentScore();
+  }, 700);
 }
 
 function updateNicknameFromInput() {
@@ -173,7 +196,7 @@ function startSoloGame() {
   }
 
   gameEnded = false;
-  scoreSubmitted = false;
+  lastSubmittedScore = 0;
   gameStarted = true;
   showScreen("game");
   hideMissionFail();
@@ -192,8 +215,9 @@ function restartGame() {
     return;
   }
 
+  submitCurrentScore();
   gameEnded = false;
-  scoreSubmitted = false;
+  lastSubmittedScore = 0;
   setPaused(false);
   game.init();
 }
@@ -224,6 +248,7 @@ nicknameForm.addEventListener("submit", (event) => {
 });
 document.getElementById("home").addEventListener("click", () => {
   if (gameStarted && !gameEnded) {
+    submitCurrentScore();
     setPaused(true);
   }
 
